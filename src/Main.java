@@ -13,6 +13,7 @@ public class Main {
         System.out.println("Voltar ao menu principal ?");
         System.out.println("1 - Sim");
         System.out.println("2 - Não");
+        System.out.print("Escolha: ");
         String escolhaUsuario = scanner.nextLine();
 
         while(!escolhaUsuario.equals("1") && !escolhaUsuario.equals("2")){
@@ -23,20 +24,21 @@ public class Main {
     }
 
     public static String getCaminhoArquivo(String tipo, Algoritimo algoritimo, Integer tamanho, TipoEntrada tipoEntrada){
-        return String.format("%s/aquivos_de_%s/%s_%s%s.txt",
-                algoritimo.getNome().replace(" ", "_").toLowerCase(),
-                tipo, tipo,
-                tipoEntrada.getNome().toLowerCase(),
+        return String.format("%s/Arquivos de %s/%s/%s%s%s.txt",
+                algoritimo.getNome(),
+                tipo,
+                tipoEntrada.getNome(),
+                tipo,
+                tipoEntrada.getNome(),
                 tamanho);
     }
 
-    // Método para formatar a duração no formato "HH:mm:ss:mm"
     public static String formatDuration(Duration duration) {
-        long minutos = duration.toMinutesPart();
+        long minutos = (duration.toHoursPart() * 60L)  + duration.toMinutesPart();
         long segundos = duration.toSecondsPart();
         long milissegundos = duration.toMillisPart();
 
-        return String.format("%02d:%02d:%10d", minutos, segundos, milissegundos);
+        return String.format("%d:%02d:%06d", minutos, segundos, milissegundos);
     }
 
     public static void main(String[] args) {
@@ -47,15 +49,23 @@ public class Main {
             contexto.escolherAlgoritimo();
             contexto.escolherEntrada();
             contexto.escolherTamanho();
+            contexto.iniciar();
             for(Algoritimo algoritimo: contexto.getAlgoritimosEscolhidos()){
                 for(TipoEntrada tipoEntrada: contexto.getTipoEntradaEscolhidos()){
-                    for (Integer tamanho: contexto.getTamanhosEscolhidos()){
+                    for(Integer tamanho: contexto.getTamanhosEscolhidos()){
+                        contexto.setProcessamentoAtual(algoritimo, tipoEntrada, tamanho);
                         int[] vetorEntrada = tipoEntrada.gerarEntrada(tamanho);
+                        contexto.atualizarProgresso();
+                        arquivo.salvarArquivo(getCaminhoArquivo("Entrada", algoritimo, tamanho, tipoEntrada), vetorEntrada);
+                        contexto.atualizarProgresso();
                         int[] vetorSaida = algoritimo.executar(vetorEntrada);
+                        contexto.atualizarProgresso();
                         Duration tempoExecucao = algoritimo.getTempoExecucao();
-                        arquivo.salvarArquivo(getCaminhoArquivo("entrada", algoritimo, tamanho, tipoEntrada), vetorEntrada);
-                        arquivo.salvarArquivo(getCaminhoArquivo("saida",algoritimo, tamanho, tipoEntrada), vetorSaida);
-                        arquivo.salvarArquivo(getCaminhoArquivo("tempo",algoritimo, tamanho, tipoEntrada), formatDuration(tempoExecucao));
+                        contexto.atualizarProgresso();
+                        arquivo.salvarArquivo(getCaminhoArquivo("Saida",algoritimo, tamanho, tipoEntrada), vetorSaida);
+                        contexto.atualizarProgresso();
+                        arquivo.salvarArquivo(getCaminhoArquivo("Tempo",algoritimo, tamanho, tipoEntrada), formatDuration(tempoExecucao));
+                        contexto.atualizarProgresso();
                     }
                 }
             }

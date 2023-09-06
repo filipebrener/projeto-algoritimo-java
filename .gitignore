@@ -27,4 +27,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-/src/insertion_sort/
+/Insertion Sort/
+/.idea/
