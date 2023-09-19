@@ -79,7 +79,7 @@ public class Arquivo {
 
         try {
             Files.walkFileTree(diretorio, EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE,
-                    new SimpleFileVisitor<Path>() {
+                    new SimpleFileVisitor<>() {
                         @Override
                         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                             Files.delete(file);

@@ -215,7 +215,4 @@ public class Contexto {
         return tamanhosEscolhidos;
     }
 
-    public List<Integer> getTodosOsTamanhos() {
-        return todosOsTamanhos;
-    }
 }
