@@ -1,8 +1,10 @@
 package domain.funcionalidades;
 
+import domain.*;
 import domain.algoritimos.Algoritmo;
 import domain.tipoEntrada.TipoEntrada;
-import domain.utils.*;
+import domain.utils.Formats;
+import domain.utils.Terminal;
 
 import java.time.Duration;
 import java.util.stream.Collectors;
@@ -13,7 +15,7 @@ public class ExecutarAlgoritmos extends Funcionalidade{
 
     private int passosExecutados;
 
-    private Pipeline pipelineAtual;
+    private ProcessamentoAtual processamentoAtualAtual;
 
     public ExecutarAlgoritmos(Contexto contexto) {
         super(contexto);
@@ -48,7 +50,7 @@ public class ExecutarAlgoritmos extends Funcionalidade{
     }
 
     private void setProcessamentoAtual(Algoritmo algoritmo, TipoEntrada tipoEntrada, Integer tamanho) {
-        pipelineAtual = new Pipeline(algoritmo, tipoEntrada, tamanho);
+        processamentoAtualAtual = new ProcessamentoAtual(algoritmo, tipoEntrada, tamanho);
     }
 
     private void atualizarProgresso() {
@@ -79,7 +81,7 @@ public class ExecutarAlgoritmos extends Funcionalidade{
     }
 
     private void exibirInformacoesAtuais() {
-        System.out.println(pipelineAtual);
+        System.out.println(processamentoAtualAtual);
     }
 
     private void exibirBarraProgresso(){

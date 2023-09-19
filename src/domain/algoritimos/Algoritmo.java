@@ -1,6 +1,6 @@
 package domain.algoritimos;
 
-import domain.utils.TempoExecucao;
+import domain.TempoExecucao;
 
 import java.time.Duration;
 

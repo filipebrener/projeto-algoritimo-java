@@ -1,6 +1,6 @@
 import domain.funcionalidades.ExecutarAlgoritmos;
-import domain.utils.Arquivo;
-import domain.utils.Contexto;
+import domain.funcionalidades.Arquivo;
+import domain.Contexto;
 import domain.algoritimos.Algoritmo;
 import domain.funcionalidades.ExibirTempo;
 import domain.utils.Terminal;

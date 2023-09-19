@@ -1,4 +1,4 @@
-package domain.utils;
+package domain.funcionalidades;
 
 import domain.algoritimos.Algoritmo;
 import domain.tipoEntrada.TipoEntrada;

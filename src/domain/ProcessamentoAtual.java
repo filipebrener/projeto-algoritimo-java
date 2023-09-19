@@ -1,9 +1,10 @@
-package domain.utils;
+package domain;
 
 import domain.algoritimos.Algoritmo;
 import domain.tipoEntrada.TipoEntrada;
+import domain.utils.Formats;
 
-public class Pipeline {
+public class ProcessamentoAtual {
 
     Algoritmo algoritmo;
 
@@ -11,7 +12,7 @@ public class Pipeline {
 
     Integer tamanho;
 
-    public Pipeline(Algoritmo algoritmo, TipoEntrada tipoEntrada, Integer tamanho) {
+    public ProcessamentoAtual(Algoritmo algoritmo, TipoEntrada tipoEntrada, Integer tamanho) {
         this.algoritmo = algoritmo;
         this.tipoEntrada = tipoEntrada;
         this.tamanho = tamanho;

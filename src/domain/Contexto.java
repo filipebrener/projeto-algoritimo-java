@@ -1,10 +1,12 @@
-package domain.utils;
+package domain;
 
 import domain.algoritimos.*;
 import domain.tipoEntrada.Aleatorio;
 import domain.tipoEntrada.Crescente;
 import domain.tipoEntrada.Decrescente;
 import domain.tipoEntrada.TipoEntrada;
+import domain.utils.Formats;
+import domain.utils.Terminal;
 
 import java.util.*;
 

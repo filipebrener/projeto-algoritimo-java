@@ -2,8 +2,7 @@ package domain.funcionalidades;
 
 import domain.algoritimos.Algoritmo;
 import domain.tipoEntrada.TipoEntrada;
-import domain.utils.Arquivo;
-import domain.utils.Contexto;
+import domain.Contexto;
 import domain.utils.Formats;
 
 import java.util.ArrayList;
