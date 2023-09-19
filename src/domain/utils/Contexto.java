@@ -6,33 +6,25 @@ import domain.tipoEntrada.Crescente;
 import domain.tipoEntrada.Decrescente;
 import domain.tipoEntrada.TipoEntrada;
 
-import java.text.DecimalFormat;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Contexto {
+
+    private static final String VOLTAR = "0";
+    private static final int PROXIMO = 1;
+    private static final int ANTERIOR = -1;
 
     final Scanner scanner = new Scanner(System.in);
 
     private final List<Algoritmo> todosAlgoritmos;
-
     private List<Algoritmo> algoritmosEscolhidos;
 
     private final List<TipoEntrada> todosOsTiposEntrada;
-
     private List<TipoEntrada> tipoEntradaEscolhidos;
 
-    private final  List<Integer> todosOsTamanhos;
-
+    private final List<Integer> todosOsTamanhos;
     private List<Integer> tamanhosEscolhidos;
 
-    private final DecimalFormat df = new DecimalFormat("#,###");
-
-    private int quantidadePassos;
-    private int passosExecutados;
-
-    private Pipeline pipelineAtual;
 
     public Contexto() {
         this.todosAlgoritmos = new ArrayList<>();
@@ -42,7 +34,8 @@ public class Contexto {
         todosAlgoritmos.add(new SelectionSort());
         todosAlgoritmos.add(new ShellSort());
 
-        this.todosOsTamanhos = List.of(10, 100, 1000, 10000, 100000, 1000000);
+//        this.todosOsTamanhos = List.of(10, 100, 1000, 10000, 100000, 1000000);
+        this.todosOsTamanhos = List.of(10, 100, 1000, 10000);
 
         this.todosOsTiposEntrada = new ArrayList<>();
         todosOsTiposEntrada.add(new Crescente());
@@ -51,41 +44,43 @@ public class Contexto {
 
     }
 
-    public void setContexto(String acao, List<String> filtroAlgoritmo){
-        escolherAlgoritmo(acao, filtroAlgoritmo);
-        escolherEntrada();
-        escolherTamanho();
+    public boolean setContexto(String acao){
+        return setContexto(acao, null, 0);
     }
 
-    public void exibirInformacoesGerais(){
-        Terminal.clearConsole();
-        System.out.println("Informações gerais:");
-        System.out.printf("Algorítmos: %s%n",
-                algoritmosEscolhidos.stream()
-                        .map(Algoritmo::getNome)
-                        .collect(Collectors.joining(", "))
-        );
-        System.out.printf("Tipos de entrada: %s%n",
-                tipoEntradaEscolhidos.stream()
-                        .map(TipoEntrada::getNome)
-                        .collect(Collectors.joining(", "))
-        );
-        System.out.printf("Tamanhos: [%s]%n%n",
-                tamanhosEscolhidos.stream()
-                        .map(df::format)
-                        .collect(Collectors.joining(", "))
-        );
+    public boolean setContexto(String acao, List<String> filtroAlgoritmo){
+        return setContexto(acao, filtroAlgoritmo, 0);
     }
+
+    public boolean setContexto(String acao, List<String> filtroAlgoritmo, int passo) {
+        if (passo < 0) return false;
+
+        switch (passo) {
+            case 0:
+                passo += escolherAlgoritmo(acao, filtroAlgoritmo) ? PROXIMO : ANTERIOR;
+                break;
+            case 1:
+                passo += escolherEntrada() ? PROXIMO : ANTERIOR;
+                break;
+            case 2:
+                passo += escolherTamanho() ? PROXIMO : ANTERIOR;
+                break;
+        }
+
+        boolean fim = passo > 2;
+        return  fim || setContexto(acao, filtroAlgoritmo, passo);
+    }
+
 
     public void finalizar() {
         System.out.println("Pressione enter para continuar... ");
         scanner.nextLine();
-        this.algoritmosEscolhidos = new ArrayList<>();
-        this.tipoEntradaEscolhidos = new ArrayList<>();
-        this.tamanhosEscolhidos = new ArrayList<>();
+        this.algoritmosEscolhidos = null;
+        this.tipoEntradaEscolhidos = null;
+        this.tamanhosEscolhidos = null;
     }
 
-    public void escolherAlgoritmo(String acao, List<String> filtroAlgoritmo) {
+    public boolean escolherAlgoritmo(String acao, List<String> filtroAlgoritmo) {
         Terminal.clearConsole();
         Map<String, Algoritmo> algoritmoMap = new HashMap<>();
         System.out.printf("Selecione um algoritmo para %s: %n\n", acao);
@@ -93,6 +88,7 @@ public class Contexto {
                 .filter(algoritmo -> filtroAlgoritmo.contains(algoritmo.getNome()))
                 .toList();
         int index = 1;
+        System.out.printf("%s: Voltar\n", VOLTAR);
         for (Algoritmo algoritmo : algoritmosValidos) {
             algoritmoMap.put(String.valueOf(index), algoritmo);
             System.out.printf("%s: %s\n", index++, algoritmo.getNome());
@@ -105,23 +101,25 @@ public class Contexto {
         String escolhaUsuario;
         do {
             escolhaUsuario = scanner.nextLine();
+            if(escolhaUsuario.equals(VOLTAR)){
+                return false;
+            }
             Algoritmo algoritmoEscolhido = algoritmoMap.get(escolhaUsuario);
-
             if (algoritmoEscolhido != null || escolhaUsuario.equals(indiceTodosAlgoritimos)) {
                 this.algoritmosEscolhidos = escolhaUsuario.equals(indiceTodosAlgoritimos) ? algoritmosValidos : List.of(algoritmoEscolhido);
                 break;
             }
             System.out.print("Número digitado é inválido! Por favor, digite novamente: ");
         } while (true);
+        return true;
     }
 
-
-
-    public void escolherEntrada(){
+    public boolean escolherEntrada(){
         Terminal.clearConsole();
         Map<String, TipoEntrada> tipoEntradaMap = new HashMap<>();
         System.out.println("Escolha um tipo de entrada para o algoritmo: ");
         int index = 1;
+        System.out.printf("%s: Voltar\n", VOLTAR);
         for(TipoEntrada entrada: todosOsTiposEntrada){
             tipoEntradaMap.put(String.valueOf(index), entrada);
             System.out.printf("%s: %s\n",index++, entrada.getNome());
@@ -131,32 +129,39 @@ public class Contexto {
 
         System.out.print("\nEscolha uma entrada: ");
         String escolhaUsuario = scanner.nextLine();
+        if(escolhaUsuario.equals(VOLTAR)){
+            return false;
+        }
         TipoEntrada entradaEscolhida = tipoEntradaMap.get(escolhaUsuario);
-
         while(entradaEscolhida == null && !escolhaUsuario.equals(todasEntradas)){
             System.out.print("Número digitado é inválido! Por favor, digite novamente: ");
             escolhaUsuario = scanner.nextLine();
             entradaEscolhida = tipoEntradaMap.get(escolhaUsuario);
         }
         this.tipoEntradaEscolhidos = escolhaUsuario.equals(todasEntradas) ? todosOsTiposEntrada : List.of(entradaEscolhida);
+        return true;
     }
 
-    public void escolherTamanho() {
+    public boolean escolherTamanho() {
         Terminal.clearConsole();
         Map<String, Integer> tamanhosMap = new HashMap<>();
         System.out.println("Escolha um tamanho para a entrada do algoritmo: ");
         int index = 1;
+        System.out.printf("%s: Voltar\n", VOLTAR);
         for(Integer tamanho: todosOsTamanhos){
             tamanhosMap.put(String.valueOf(index), tamanho);
-            System.out.printf("%s: %s\n",index++, df.format(tamanho));
+            System.out.printf("%s: %s\n",index++, Formats.decimalFormat.format(tamanho));
         }
         String todosTamanhos = String.valueOf(index);
         System.out.println(todosTamanhos + ": Todos");
 
         System.out.print("\nEscolha um tamanho: ");
         String escolhaUsuario = scanner.nextLine();
-        Integer tamanhoEscolhido = tamanhosMap.get(escolhaUsuario);
+        if(escolhaUsuario.equals(VOLTAR)){
+            return false;
+        }
 
+        Integer tamanhoEscolhido = tamanhosMap.get(escolhaUsuario);
         while(tamanhoEscolhido == null && !escolhaUsuario.equals(todosTamanhos)){
             System.out.print("Número digitado é inválido! Por favor, digite novamente: ");
             escolhaUsuario = scanner.nextLine();
@@ -164,43 +169,7 @@ public class Contexto {
         }
 
         this.tamanhosEscolhidos = escolhaUsuario.equals(todosTamanhos) ? this.todosOsTamanhos : List.of(tamanhoEscolhido);
-    }
-
-    public void iniciarBarraProgresso() {
-        quantidadePassos = 6 * getAlgoritmosEscolhidos().toArray().length * getTipoEntradaEscolhidos().toArray().length * getTamanhosEscolhidos().toArray().length;
-        passosExecutados = 0;
-    }
-
-    public void setProcessamentoAtual(Algoritmo algoritmo, TipoEntrada tipoEntrada, Integer tamanho) {
-        pipelineAtual = new Pipeline(algoritmo, tipoEntrada, tamanho);
-    }
-
-    public void atualizarProgresso() {
-        exibirInformacoesGerais();
-        exibirInformacoesAtuais();
-        passosExecutados++;
-        exibirBarraProgresso();
-    }
-
-    private void exibirInformacoesAtuais() {
-        System.out.println(pipelineAtual);
-    }
-
-    private void exibirBarraProgresso(){
-        int porcentagem = (int) ((double) passosExecutados / quantidadePassos * 100);
-        int barras = porcentagem / 2; // Para criar as barras "#" conforme a porcentagem
-
-        System.out.print("Progresso: " + porcentagem + "% [");
-
-        for (int i = 0; i < barras; i++) {
-            System.out.print("#");
-        }
-
-        for (int i = barras; i < 50; i++) {
-            System.out.print(" ");
-        }
-
-        System.out.println("]");
+        return true;
     }
 
     public List<Algoritmo> getAlgoritmosEscolhidos() {
