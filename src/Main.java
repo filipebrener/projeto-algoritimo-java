@@ -5,13 +5,17 @@ import domain.algoritimos.Algoritmo;
 import domain.funcionalidades.ExibirTempo;
 import domain.utils.Terminal;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+import static domain.utils.EnumUtils.PASTA_RAIZ;
+
 
 public class Main {
 
     static final Scanner scanner = new Scanner(System.in);
-
-    final static String PASTA_RAIZ = "Algoritmos/";
 
     final static Contexto contexto = new Contexto();
 
@@ -42,7 +46,7 @@ public class Main {
     }
 
     static Runnable apagarPastas(){
-        List<String> pastas = Arquivo.listarPastasCriadas(PASTA_RAIZ);
+        List<String> pastas = Arquivo.listarPastasCriadas(PASTA_RAIZ.toString());
         if(pastas.isEmpty()){
             System.out.println("\nNenhuma pasta encontrada, experimente executar um algoritmo!");
             System.out.print("Pressione enter para continuar... ");
@@ -66,7 +70,7 @@ public class Main {
     }
 
     static Runnable visualizarTemposDeExecucao(){
-        List<String> pastas = Arquivo.listarPastasCriadas(PASTA_RAIZ);
+        List<String> pastas = Arquivo.listarPastasCriadas(PASTA_RAIZ.toString());
         if(pastas.isEmpty()){
             System.out.println("\nNenhuma pasta encontrada, experimente executar um algoritmo!");
             System.out.print("Pressione enter para continuar... ");

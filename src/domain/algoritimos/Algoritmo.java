@@ -1,6 +1,6 @@
 package domain.algoritimos;
 
-import domain.TempoExecucao;
+import domain.TempoExecucaoCalc;
 
 import java.time.Duration;
 
@@ -8,11 +8,11 @@ public abstract class Algoritmo {
 
     protected final String nome;
 
-    private final TempoExecucao execucao;
+    private final TempoExecucaoCalc execucao;
 
     protected Algoritmo(String nome) {
         this.nome = nome;
-        this.execucao = new TempoExecucao();
+        this.execucao = new TempoExecucaoCalc();
     }
 
     public final int[] executar(int[] vetor){

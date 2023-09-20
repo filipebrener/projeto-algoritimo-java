@@ -6,11 +6,11 @@ import domain.utils.Formats;
 
 public class ProcessamentoAtual {
 
-    Algoritmo algoritmo;
+    final Algoritmo algoritmo;
 
-    TipoEntrada tipoEntrada;
+    final TipoEntrada tipoEntrada;
 
-    Integer tamanho;
+    final Integer tamanho;
 
     public ProcessamentoAtual(Algoritmo algoritmo, TipoEntrada tipoEntrada, Integer tamanho) {
         this.algoritmo = algoritmo;

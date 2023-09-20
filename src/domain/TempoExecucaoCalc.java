@@ -3,7 +3,7 @@ package domain;
 import java.time.LocalDateTime;
 import java.time.Duration;
 
-public class TempoExecucao {
+public class TempoExecucaoCalc {
 
     private LocalDateTime tempoInicio;
     private LocalDateTime tempoFim;

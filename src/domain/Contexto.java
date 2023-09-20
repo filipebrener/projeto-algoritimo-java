@@ -36,8 +36,7 @@ public class Contexto {
         todosAlgoritmos.add(new SelectionSort());
         todosAlgoritmos.add(new ShellSort());
 
-//        this.todosOsTamanhos = List.of(10, 100, 1000, 10000, 100000, 1000000);
-        this.todosOsTamanhos = List.of(10, 100, 1000, 10000);
+        this.todosOsTamanhos = List.of(10, 100, 1000, 10000, 100000, 10000000);
 
         this.todosOsTiposEntrada = new ArrayList<>();
         todosOsTiposEntrada.add(new Crescente());
