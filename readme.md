@@ -15,6 +15,8 @@ Este guia irá ensinar como executar um código Java em sua máquina. Certifique
 
 5. Agora você pode executar o programa Java usando o comando `java Main.class`. Isso executará o programa Java e mostrará a saída no terminal.
 
+6. Para evitar problemas com a execução de algorítimos que usam bastante memória como QuickSort, vamos usar o argumento `-Xssm128m` que vai definir o tamanho da stack do processo, então para executar o programa o comando completo é `java -Xssm128 Main.class`
+
 
 ## Caso o programa não esteja compilado
 

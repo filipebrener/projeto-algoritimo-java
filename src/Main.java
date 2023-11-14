@@ -27,7 +27,7 @@ public class Main {
         String[] opcoesMenu =  funcionalidades.keySet().toArray(new String[0]);
         System.out.println("Escolha uma das opções:");
         for(int i = 0; i < opcoesMenu.length; i++){
-            System.out.printf("%s: %s\n",i + 1, opcoesMenu[i]);
+            System.out.printf("%s: %s\n",i, opcoesMenu[i]);
         }
         boolean escolhaValida = true;
         System.out.print("Sua escolha: ");
@@ -37,12 +37,12 @@ public class Main {
                 if(!escolhaValida){
                     System.err.print("Número digitado é inválido! Por favor, digite novamente: ");
                 }
-                escolhaValida = funcionalidades.containsKey(opcoesMenu[Integer.parseInt(escolhaUsuario) - 1]);
+                escolhaValida = funcionalidades.containsKey(opcoesMenu[Integer.parseInt(escolhaUsuario)]);
             } catch (Exception ex){
                 escolhaValida = false;
             }
         }while(!escolhaValida);
-        return funcionalidades.get(opcoesMenu[Integer.parseInt(escolhaUsuario) - 1]);
+        return funcionalidades.get(opcoesMenu[Integer.parseInt(escolhaUsuario)]);
     }
 
     static Runnable apagarPastas(){
@@ -86,10 +86,10 @@ public class Main {
 
     public static void main(String[] args) {
         Map<String, Runnable> funcionalidades = new LinkedHashMap<>();
+        funcionalidades.put("Fechar programa", () -> continuar = false);
         funcionalidades.put("Executar algoritmos", Main::executarAlgoritmos);
         funcionalidades.put("Visualizar tempos de execução", Main::visualizarTemposDeExecucao);
         funcionalidades.put("Apagar pastas", Main::apagarPastas);
-        funcionalidades.put("Fechar programa", () -> continuar = false);
         do{
             escolherFuncionalidade(funcionalidades).run();
         }while(continuar);

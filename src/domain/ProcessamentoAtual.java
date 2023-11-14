@@ -6,11 +6,11 @@ import domain.utils.Formats;
 
 public class ProcessamentoAtual {
 
-    final Algoritmo algoritmo;
+    private final Algoritmo algoritmo;
 
-    final TipoEntrada tipoEntrada;
+    private final TipoEntrada tipoEntrada;
 
-    final Integer tamanho;
+    private final Integer tamanho;
 
     public ProcessamentoAtual(Algoritmo algoritmo, TipoEntrada tipoEntrada, Integer tamanho) {
         this.algoritmo = algoritmo;
@@ -21,5 +21,17 @@ public class ProcessamentoAtual {
     @Override
     public String toString() {
         return String.format("%nProcessando atualmente:%nAlgoritmo: %s%nOrdem inicial do vetor: %s%nTamanho %s%n", algoritmo.getNome(), tipoEntrada.getNome(), Formats.decimalFormat.format(tamanho));
+    }
+
+    public Algoritmo getAlgoritmo(){
+        return algoritmo;
+    }
+
+    public TipoEntrada getTipoEntrada() {
+        return tipoEntrada;
+    }
+
+    public Integer getTamanho() {
+        return tamanho;
     }
 }

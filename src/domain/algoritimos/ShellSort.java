@@ -6,13 +6,11 @@ public class ShellSort extends Algoritmo {
     }
 
     @Override
-    protected int[] ordernar(int[] vetor) {
-        int n = vetor.length;
-
+    public int[] ordenar(int[] vetor) {
         // Inicializa o intervalo (gap) com metade do tamanho do array
-        for (int gap = n / 2; gap > 0; gap /= 2) {
+        for (int gap = vetor.length / 2; gap > 0; gap /= 2) {
             // Realiza a inserção por intervalos semelhante ao insertion sort
-            for (int i = gap; i < n; i++) {
+            for (int i = gap; i < vetor.length; i++) {
                 int temp = vetor[i];
                 int j;
 

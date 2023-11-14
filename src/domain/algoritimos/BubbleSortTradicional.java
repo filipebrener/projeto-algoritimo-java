@@ -8,7 +8,7 @@ public class BubbleSortTradicional extends Algoritmo {
     }
 
     @Override
-    protected int[] ordernar(int[] vetor) {
+    protected int[] ordenar(int[] vetor) {
         for (int i = 0; i < vetor.length - 1; i++) {
             for (int j = 0; j < vetor.length - i - 1; j++) {
                 if (vetor[j] > vetor[j + 1]) {

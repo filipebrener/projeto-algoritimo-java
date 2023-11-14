@@ -30,11 +30,16 @@ public class Contexto {
 
     public Contexto() {
         this.todosAlgoritmos = new ArrayList<>();
-        todosAlgoritmos.add(new InsertionSort());
-        todosAlgoritmos.add(new BubbleSortTradicional());
-        todosAlgoritmos.add(new BubbleSortOtimizado());
-        todosAlgoritmos.add(new SelectionSort());
+//        todosAlgoritmos.add(new InsertionSort());
+//        todosAlgoritmos.add(new BubbleSortTradicional());
+//        todosAlgoritmos.add(new BubbleSortOtimizado());
+//        todosAlgoritmos.add(new SelectionSort());
         todosAlgoritmos.add(new ShellSort());
+        todosAlgoritmos.add(new MergeSort());
+        todosAlgoritmos.add(new QuickSortV1()); // pivô primeira posição
+        todosAlgoritmos.add(new QuickSortV2()); // média
+        todosAlgoritmos.add(new QuickSortV3()); // mediada
+        todosAlgoritmos.add(new QuickSortV4()); // aleatório
 
         this.todosOsTamanhos = List.of(10, 100, 1000, 10000, 100000, 1000000);
 

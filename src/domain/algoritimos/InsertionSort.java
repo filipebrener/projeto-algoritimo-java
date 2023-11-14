@@ -6,7 +6,7 @@ public class InsertionSort extends Algoritmo {
         super("Insertion Sort");
     }
 
-    public int[] ordernar(int[] vetor) {
+    public int[] ordenar(int[] vetor) {
         for (int j = 1; j < vetor.length; j++){
             int valorAtual = vetor[j];
             int indice = j - 1;

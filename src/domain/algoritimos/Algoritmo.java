@@ -17,7 +17,7 @@ public abstract class Algoritmo {
 
     public final int[] executar(int[] vetor){
         execucao.iniciar();
-        int[] vetorOrdenado = this.ordernar(vetor);
+        int[] vetorOrdenado = this.ordenar(vetor);
         execucao.finalizar();
         return vetorOrdenado;
     }
@@ -30,7 +30,7 @@ public abstract class Algoritmo {
         return tempoExecucao;
     }
 
-    protected abstract int[] ordernar(int[] vetor);
+    protected abstract int[] ordenar(int[] vetor);
 
     public String getNome(){
         return this.nome;

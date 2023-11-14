@@ -7,7 +7,7 @@ public class BubbleSortOtimizado extends Algoritmo {
     }
 
     @Override
-    protected int[] ordernar(int[] vetor) {
+    protected int[] ordenar(int[] vetor) {
         boolean trocou;
         for (int i = 0; i < vetor.length - 1; i++) {
             trocou = false;

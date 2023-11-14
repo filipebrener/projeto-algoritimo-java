@@ -39,13 +39,15 @@ public class ExecutarAlgoritmos extends Funcionalidade{
                     atualizarProgresso();
                     Arquivo.salvarArquivo("Tempo", algoritmo, tamanho, tipoEntrada, formatDuration(tempoExecucao));
                     atualizarProgresso();
+                    verificarOrdenacao(vetorSaida);
+                    atualizarProgresso();
                 }
             }
         }
     }
 
     private void iniciarBarraProgresso() {
-        quantidadePassos = 6 * algoritmos.toArray().length * tipoEntradas.toArray().length * tamanhos.toArray().length;
+        quantidadePassos = 7 * algoritmos.toArray().length * tipoEntradas.toArray().length * tamanhos.toArray().length;
         passosExecutados = 0;
     }
 
@@ -100,6 +102,17 @@ public class ExecutarAlgoritmos extends Funcionalidade{
         long milissegundos = duration.toMillisPart();
 
         return String.format("%d:%02d:%06d", minutos, segundos, milissegundos);
+    }
+
+    private void verificarOrdenacao(int [] vetor){
+        for(int i = 1; i < vetor.length; i++){
+            if(vetor[i - 1] > vetor[i]){
+                throw new RuntimeException(String.format("Erro na ordenação do algorítimo %s com tamanho %s de ordem %s!!!\n%s",
+                        processamentoAtualAtual.getAlgoritmo().getNome(), processamentoAtualAtual.getTamanho(),
+                        processamentoAtualAtual.getTipoEntrada().getNome(),
+                        "Erro encontrado na posição " + (i + 1) + " do vetor, confira se esta tudo em ordem no arquivo de saída!"));
+            }
+        }
     }
 
 }
